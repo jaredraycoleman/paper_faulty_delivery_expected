@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{authblk}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{nameref}
+\usepackage{placeins}
+\usepackage{hyperref}
+\usepackage{biblatex}
+\usepackage[dvipsnames]{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!80!black},
+    citecolor={blue!80!black},
+    urlcolor={blue!80!black}
+}
+
+\usepackage{lipsum}
+\usepackage{enumitem}
+
+% Command for writing comments
+\newcommand\JC[1]{{\color{Maroon} JC: #1}}         % Jared:    Use \JC{my note}
+
+\newcommand*{\doi}[1]{DOI: \href{http://dx.doi.org/#1}{#1}}\setitemize{noitemsep,topsep=5pt,parsep=2pt,partopsep=0pt}
+
+% bibliography
+\addbibresource{main.bib}
+
+
+% SETUP
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{problem}{Problem}
+
+\title{A Very Interesting Title}
+\author[1]{Jared Coleman}
+\affil[1]{Loyola Marymount University}
+
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\lipsum[1]
+\end{abstract}
+
+
+\section{Introduction}
+
+An agent starts at $(0, 0)$ with an object and is moving in a straight line towards $(1,0)$ to deliver it.
+Because the start may fail, we deploy a second agent (called the \textit{finisher}), starting at position $(x,y)$ that can pick up the object and finish the delivery to $(1,0)$.
+Suppose the starter fails at $(0,0)$ with probability $p$ and at $(1,0)$ with probability $1-p$.
+We only consider the object to be delivered when the finisher and the object are co-located at $(1,0)$.
+Both agents always move at a maximum speed of $1$. The finisher can start, stop, and change direction instantaneously.
+
+Let's start by considering the case where $(x-1)^2 + y^2 \leq 1$.
+In this case, the finisher can always reach the object before it reaches $(1,0)$.
+Observe the point $(m, 0)$ where $m = \frac{x^2 + y^2}{2x}$ is the point where, supposing the starter does not fail, the two agents can meet at the same time (time $t = m$).
+Let's consider three candidate algorithms:
+\begin{enumerate}
+    \item $A_0$: The finisher moves directly to $(0,0)$, then to $(1,0)$, guaranteeing a delivery time of $1+\sqrt{x^2 + y^2}$.
+    \item $A_1$: The finisher moves directly to $(1,0)$. Then, with probability $p$ the delivery time is $2+\sqrt{(x-1)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
+    \item $A_m$: The finisher moves to $(m,0)$, then to $(0,0)$, then to $(1,0)$. Then with probability $p$ the delivery time is $2m + 1 + \sqrt{(x-m)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
+\end{enumerate}
+Let $D_0$, $D_1$, and $D_m$ be the expected delivery times for algorithms $A_0$, $A_1$, and $A_m$, respectively.
+Then $D_0 = 1 + \sqrt{x^2 + y^2}$, $D_1 = p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$, and $D_m = p(2m + \sqrt{(x-m)^2 + y^2}) + (1-p)$.
+
+
+\printbibliography
+
+\end{document}
