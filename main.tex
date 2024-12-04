@@ -73,12 +73,33 @@ Let's consider three candidate algorithms:
 \begin{enumerate}
     \item $A_0$: The finisher moves directly to $(0,0)$, then to $(1,0)$, guaranteeing a delivery time of $1+\sqrt{x^2 + y^2}$.
     \item $A_1$: The finisher moves directly to $(1,0)$. Then, with probability $p$ the delivery time is $2+\sqrt{(x-1)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
-    \item $A_m$: The finisher moves to $(m,0)$, then to $(0,0)$, then to $(1,0)$. Then with probability $p$ the delivery time is $2m + 1 + \sqrt{(x-m)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
+    \item $A_m$: The finisher moves to $(m,0)$, then to $(0,0)$, then to $(1,0)$. Then with probability $p$ the delivery time is $2 + 1 + \sqrt{(x-m)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
 \end{enumerate}
 Let $D_0$, $D_1$, and $D_m$ be the expected delivery times for algorithms $A_0$, $A_1$, and $A_m$, respectively.
-Then $D_0 = 1 + \sqrt{x^2 + y^2}$, $D_1 = p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$, and $D_m = p(2m + \sqrt{(x-m)^2 + y^2}) + (1-p)$.
+Then $D_0 = 1 + \sqrt{x^2 + y^2}$, $D_1 = p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$, and $D_m = p(m + 1 + \sqrt{(x-m)^2 + y^2}) + (1-p)$.
+
+Let's consider the case where $(x-1)^2 + y^2 > 1$ (i.e., the finisher cannot reach the object before it reaches $(1,0)$).
+In this case, the only two algorithms that make sense are $A_0$ and $A_1$.
+The expected delivery time for $A_0$, then is better than $A_1$ if $1 + \sqrt{x^2 + y^2} < p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$.
+Solving for $y$, we find that this is true when 
+\begin{equation}
+    y < 2 \frac{(1-p)p(p-x)(1-p-x)}{(1-2p)^2} \label{eq:a0:a1}
+\end{equation}
+
+\begin{theorem}
+    The curve defined by Equation \ref{eq:a0:a1} has an oblique asymptote at $y = \text{sgn}(x) \cdot 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}x + \frac{1}{2}$.
+\end{theorem}
+\begin{proof}
+    \JC{This is just a sketch of the proof.}
+    Let $f(x) = 2 \frac{(1-p)p(p-x)(1-p-x)}{(1-2p)^2}$.
+    Taking the limit of $f'(x)$ as $x \to \infty$, yields $2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}$.
+    Thus, the slope of $f(x)$ approaches a constant as $x \to \infty$.
+    Then we know there must exist an oblique asymptote of the form $y = mx + b$ where $m = 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}$.
+    To find $b$, we must find the value of $b$ such that $\lim_{x \to \infty} f(x) - (m x + b) = 0$.
+    This yields $b = \frac{1}{2}$. Thus, the oblique asymptote is $y = \text{sgn}{x} 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}x + \frac{1}{2}$.
+\end{proof}
 
 
-\printbibliography
+% \printbibliography
 
 \end{document}
