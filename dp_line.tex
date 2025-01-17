@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{authblk}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{nameref}
+\usepackage{placeins}
+\usepackage{hyperref}
+\usepackage{biblatex}
+\usepackage[dvipsnames]{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!80!black},
+    citecolor={blue!80!black},
+    urlcolor={blue!80!black}
+}
+
+\usepackage{lipsum}
+\usepackage{enumitem}
+
+% Command for writing comments
+\newcommand\JC[1]{{\color{Maroon} JC: #1}}         % Jared:    Use \JC{my note}
+\newcommand\DK[1]{{\color{Blue} DK: #1}}         % Jared:    Use \JC{my note}
+
+\newcommand*{\doi}[1]{DOI: \href{http://dx.doi.org/#1}{#1}}\setitemize{noitemsep,topsep=5pt,parsep=2pt,partopsep=0pt}
+
+% bibliography
+\addbibresource{main.bib}
+
+
+% SETUP
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{problem}{Problem}
+
+\title{A Very Interesting Title}
+\author[1]{Jared Coleman}
+\affil[1]{Loyola Marymount University}
+
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Abstract goes here. 
+\end{abstract}
+
+
+%\section{Introduction}
+%
+%An agent starts at $(0, 0)$ with an object and is moving in a straight line towards $(1,0)$ to deliver it.
+%Because the start may fail, we deploy a second agent (called the \textit{finisher}), starting at position $(x,y)$ that can pick up the object and finish the delivery to $(1,0)$.
+%Suppose the starter fails at $(0,0)$ with probability $p$ and at $(1,0)$ with probability $1-p$.
+%We only consider the object to be delivered when the finisher and the object are co-located at $(1,0)$.
+%Both agents always move at a maximum speed of $1$. The finisher can start, stop, and change direction instantaneously.
+%
+%Let's start by considering the case where $(x-1)^2 + y^2 \leq 1$.
+%In this case, the finisher can always reach the object before it reaches $(1,0)$.
+%Observe the point $(m, 0)$ where $m = \frac{x^2 + y^2}{2x}$ is the point where, supposing the starter does not fail, the two agents can meet at the same time (time $t = m$).
+%Let's consider three candidate algorithms:
+%\begin{enumerate}
+%    \item $A_0$: The finisher moves directly to $(0,0)$, then to $(1,0)$, guaranteeing a delivery time of $1+\sqrt{x^2 + y^2}$.
+%    \item $A_1$: The finisher moves directly to $(1,0)$. Then, with probability $p$ the delivery time is $2+\sqrt{(x-1)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
+%    \item $A_m$: The finisher moves to $(m,0)$, then to $(0,0)$, then to $(1,0)$. Then with probability $p$ the delivery time is $2 + 1 + \sqrt{(x-m)^2 + y^2}$, and with probability $1-p$ the delivery time is $1$.
+%\end{enumerate}
+%Let $D_0$, $D_1$, and $D_m$ be the expected delivery times for algorithms $A_0$, $A_1$, and $A_m$, respectively.
+%Then $D_0 = 1 + \sqrt{x^2 + y^2}$, $D_1 = p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$, and $D_m = p(m + 1 + \sqrt{(x-m)^2 + y^2}) + (1-p)$.
+%
+%Let's consider the case where $(x-1)^2 + y^2 > 1$ (i.e., the finisher cannot reach the object before it reaches $(1,0)$).
+%In this case, the only two algorithms that make sense are $A_0$ and $A_1$.
+%The expected delivery time for $A_0$, then is better than $A_1$ if $1 + \sqrt{x^2 + y^2} < p(2 + \sqrt{(x-1)^2 + y^2}) + (1-p)$.
+%Solving for $y$, we find that this is true when 
+%\begin{equation}
+%    y < 2 \frac{(1-p)p(p-x)(1-p-x)}{(1-2p)^2} \label{eq:a0:a1}
+%\end{equation}
+%
+%\begin{theorem}
+%    The curve defined by Equation \ref{eq:a0:a1} has an oblique asymptote at $y = \text{sgn}(x) \cdot 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}x + \frac{1}{2}$.
+%\end{theorem}
+%\begin{proof}
+%    \JC{This is just a sketch of the proof.}
+%    Let $f(x) = 2 \frac{(1-p)p(p-x)(1-p-x)}{(1-2p)^2}$.
+%    Taking the limit of $f'(x)$ as $x \to \infty$, yields $2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}$.
+%    Thus, the slope of $f(x)$ approaches a constant as $x \to \infty$.
+%    Then we know there must exist an oblique asymptote of the form $y = mx + b$ where $m = 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}$.
+%    To find $b$, we must find the value of $b$ such that $\lim_{x \to \infty} f(x) - (m x + b) = 0$.
+%    This yields $b = \frac{1}{2}$. Thus, the oblique asymptote is $y = \text{sgn}(x) \cdot 2 \sqrt{\frac{(1-p)p}{(1-2p)^2}}x + \frac{1}{2}$.
+%\end{proof}
+
+\section{Discrete Case - Start after failure}
+
+
+An agent starts at time 0 at $S = (0, 0)$ carrying an object and is moving in a straight line at speed 1 towards $T = (1,0)$ to deliver it. At time
+1, the agent has not arrived at $T$. A priori, we know there are $n$ positions, $(a_i, 0)$ for  $i = 1, \ldots n$,  where the agent may have failed. 
+We assume $0< a_1 < a_2 < \ldots < a_n < 1$ and the probability that the agent failed at $a_i$ is $p_i$ where $\sum_{i=1}^n p_i = 1$.
+Due to the failure, at time 1, we deploy a second agent (called the \textit{finisher}), starting at position $H = (x,y)$, that can pick up the object and finish the delivery to $T$.
+We are interested in minimizing the expected time of delivery of the object by the finisher. 
+
+In the following we will use $d(i, j)$ to mean the Euclidean distance between positions $a_i$ and $a_j$ and $d(i, x)$ for $x \in \{ S, T, H \}$ to mean the distance
+between position $i$ and $S, T, H$, respectively. 
+We define $C[i, j, k]$ to equal the minimum expected delivery time assuming that positions $a_1, \ldots, a_i$ and positions $a_j, \ldots, a_n$ have not been visited, 
+positions $a_{i+1}, \ldots ,a_{j-1}$ have been visited (and the object not found), and the finisher is at position $k$, where $k = i+1$ or $k= j-1$. We assume $j > i+1$, i.e., 
+at least one position between $a_i$ and $a_j$ has been visited. We  define $C[0, i, k]$ to be the case where positions $a_1, \ldots, a_{i-1}$ have been visited (and the object not found), positions $a_{i}, \ldots, a_n$ have not
+been visited and the finisher is at position $k=1$ or $k=i$. 
+We define $C[i, n+1, k]$ to be the case where positions $a_{i+1}, \ldots, a_n$ have been visited (and the object not found), positions $a_1, \ldots, a_{i} $ have not
+been visited  and the finisher is at position $k=n$ or $k=i+1$.
+Define  $p_k^{i,j} = \frac{p_i}{1-\sum_{k=i+1}^{j-1} p_k }$ to be the probability the object is at position $k$ given that it is known to not be at positions $i+1, \ldots, j-1$. (Note: this
+includes the case where $i=0$ and $j=n+1$.)
+
+
+Observe that in the minimum expected time trajectory, the finisher must first go directly to the first position $i$ it visits in time $d(H,i)$. If not, a better trajectory can be created by
+going directly to the first position. Observe further that once the finisher has visited a position on the line, the remainder of its trajectory must stay on the line and visit positions
+that are immediately to the left or to the right of the most recent position it visited since clearly it makes no sense to skip a position by leaving the line.
+Thus at any time, the finishers optimal trajectory consists of a contiguous interval of visited positions along with an interval to its left and an interval to its right (either of which
+could be empty but not both) containing unvisited positions. If the left interval is empty, the optimal trajectory consists of going to the right and visiting all remaining positions
+(picking up the object along the way) until $T$ is reached. If the interval to the right is empty, the optimal trajectory consists of visiting all positions to the left until the object is found and then taking the object directly to $T$.
+
+These observations lead to the following recursive formula for the cost of the optimal trajectory:
+
+$$MinExpCost = \min_{i \in [1,n]} \{ d(H,i) + C[i-1,i+1,i]\}, $$
+
+$$C[0,i, k] =  d(k,T), 1\leq i \leq n, k \in \{1,i-1 \}$$
+
+$$C[1,n+1,k] = d(k,1) + d(1,T), k \in \{ 2,n \}$$
+
+$$C[i,n+1,k] = d(k,i) + p_i^{i,n+1} * d(i,T) + (1 - p_i^{i,n+1})*C[i-1, n+1,i], 2\leq i \leq n-1, k\in\{i+1,n\}$$
+
+$$C[i,j,k] = \min \{ d(k,i) + p_i^{i,j} * d(i,T) + (1-p_s^{i,j}) * C(i-1,j,i) ,d(k,j) + p_j^{i,j} * d(j,T) + (1-p_j^{i,j}) * C(i,j+1,j)  \}.$$
+
+Using dynamic programming the optimal cost can be calculated in $O(n^2)$ time and the trajectory can be recovered by remembering whether the best choice
+was to go the right or left at each expansion of the search interval. This leads to 
+
+\begin{theorem}
+The minimum expected cost trajectory for recovery and delivery on a line with $n$ discrete potential failure points can be computed in $O(n^2)$ time. 
+
+\end{theorem}
+
+\DK{Open question 1: points in general position. NP-hard? Approximation?}
+
+\DK{Open question 2: can above be done using a greedy approach?}
+
+\DK{Open question 3: what if $p_i = 1/n$? Can you do better than above?}
+
+\DK{Open question 4: what if $a_i = i/(n+1)$? Can you do better than above?}
+
+\DK{Open question 5: can you use the answer to question 3 or 4 to approximate an arbitrary continuous distribution on [0,1]?}
+
+   
+
+
+
+
+% \printbibliography
+
+\end{document}
