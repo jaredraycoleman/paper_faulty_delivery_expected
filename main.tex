@@ -43,9 +43,15 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem*{problem}{Problem}
 
-\title{A Very Interesting Title}
+\title{Fault-Tolerant Delivery with Two Agents}
 \author[1]{Jared Coleman}
-\affil[1]{Loyola Marymount University}
+\affil[1]{Loyola Marymount University \\ \texttt{jared.coleman@lmu.edu}}
+\author[2]{Evangelos Kranakis}
+\affil[2]{Carleton University \\ \texttt{kranakis@scs.carleton.ca}}
+\author[3]{Danny Krizanc}
+\affil[3]{Wesleyan University \\ \texttt{dkrizanc@wesleyan.edu}}
+\author[4]{Oscar Morales-Ponce}
+\affil[4]{California State University Long Beach \texttt{Oscar.MoralesPonce@csulb.edu}}
 
 \date{\today}
 
@@ -54,17 +60,36 @@
 \maketitle
 
 \begin{abstract}
-\lipsum[1]
-\end{abstract}
 
+\end{abstract}
 
 \section{Introduction}
 
-An agent starts at $(0, 0)$ with an object and is moving in a straight line towards $(1,0)$ to deliver it.
-Because the start may fail, we deploy a second agent (called the \textit{finisher}), starting at position $(x,y)$ that can pick up the object and finish the delivery to $(1,0)$.
-Suppose the starter fails at $(0,0)$ with probability $p$ and at $(1,0)$ with probability $1-p$.
-We only consider the object to be delivered when the finisher and the object are co-located at $(1,0)$.
-Both agents always move at a maximum speed of $1$. The finisher can start, stop, and change direction instantaneously.
+\section{Related Work}
+
+\section{Model}
+An agent, referred to as the \textit{starter}, begins at $(0,0)$ with an object and moves in a straight line towards $(1,0)$ to deliver it.
+To handle potential failures, a second agent, called the \textit{finisher}, starts at position $(x, y)$ and is tasked with retrieving the object and completing the delivery to $(1,0)$ if necessary.
+
+The starter may fail at discrete points $(a_0, 0), (a_1, 0), \ldots, (a_n, 0)$ with associated probabilities $p_0, p_1, \ldots, p_n$. 
+A failure at $(a_i, 0)$ implies that the starter halts at that position, requiring the finisher to retrieve the object from $(a_i, 0)$. 
+Both agents travel at a maximum speed of $1$ and the finisher can change direction instantaneously.
+
+The objective is to minimize the expected delivery time of the object. We examine two communication models:
+\begin{enumerate}
+    \item \textbf{Face-to-Face Model:} Communication between the starter and the finisher occurs only when they occupy the same location. Consequently, if the starter fails at $(a_i, 0)$, the finisher becomes aware of this only upon arriving at $(a_i, 0)$ (or by process of elimination).
+    \item \textbf{WiFi Model:} The starter and finisher can communicate at all times. In this case, the finisher is continuously informed of the starter's location and any failure points.
+\end{enumerate}
+
+\section{Face-to-Face Model}
+In this section, we present results for the face-to-face model, where the finisher is only aware of the starter's location when they occupy the same point or by process of elimination (i.e., the only remaining possibility is that the starter has failed at a specific point).
+
+
+
+\subsection{Endpoints}
+We start by considering a special case where the starter fails at $(0,0)$ with probability $p$ and at $(1,0)$ with probability $q$.
+
+\JC{Need to change below to Evangelos' model.}
 
 Let's start by considering the case where $(x-1)^2 + y^2 \leq 1$.
 In this case, the finisher can always reach the object before it reaches $(1,0)$.
@@ -100,6 +125,31 @@ Solving for $y$, we find that this is true when
 \end{proof}
 
 
-% \printbibliography
+\subsection{Midpoints}
+Now, we will generalize the above results to the case where the starter can fail at any point $(a, 0)$ with probability $p$ and $(b, 0)$ with probability $q$.
+
+\JC{Add stuff from evangelos\_model.nb}
+
+
+\subsection{$n$ Points}
+\JC{Add stuff on dynamic programming solution (dp\_line.tex).}
+
+
+\section{Wifi Model}
+
+\subsection{Endpoints}
+\JC{This case is trivial, since the finisher would know immediately if the starter did not fail at $(0,0)$. Don't need a section for it.}
+
+\subsection{Midpoints}
+\JC{Still need to do this, Mathematica doesn't want to give the answer}
+
+\subsection{$n$ Points}
+\JC{Can we come up with a dynamic programming solution?}
+
+
+\section{Conclusion}
+
+
+\printbibliography
 
 \end{document}
